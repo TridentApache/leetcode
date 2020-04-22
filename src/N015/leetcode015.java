@@ -16,6 +16,13 @@ import java.util.ListIterator;
  * ]
  * */
 
+/**
+ * 固定一个值，然后双指针思路
+ * 注意：
+ * 1. 去重，比如{0,0,0,0}的情况，所以第一层for中要首先去重
+ * 2. 防止双指针之间还有解，所以得到一个解后，去重，并L++和R--*
+ * */
+
 public class leetcode015 {
     public static void main(String[] args){
         Solution s = new Solution();
@@ -42,7 +49,7 @@ class Solution1 {
             while(L<R){
                 if(nums[i]+nums[L]+nums[R]==0){
                     ls.add(Arrays.asList(nums[i],nums[L],nums[R]));
-                    /**防止LR之间还有，所以去重加上L++和R--*/
+                    /**防止L和R之间还有解，所以去重加上L++和R--*/
                     while(L<R&&nums[R-1]==nums[R]){
                         R--;
                     }

@@ -20,6 +20,9 @@ import java.util.List;
  * ]
  * */
 
+/**
+ * 思路：和三数之和几乎一样，固定前2个遍历，最后2个作为双指针
+ * */
 public class leetcode018 {
     public static void main(String[] args){
         Solution1 s1 = new Solution1();

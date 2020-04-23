@@ -31,7 +31,8 @@ import java.util.Map;
 
 public class leetcode454 {
     public static void main(String[] args){
-
+        Solution s1 = new Solution();
+        System.out.println(s1.fourSumCount(new int[]{1, 0, -1, 0, -2, 2},new int[]{1, 0, -1, 3},new int[]{-2, 2},new int[]{1, 2}));
     }
 }
 

@@ -7,8 +7,39 @@ import java.util.Map;
 public class leetcode003 {
     public static void main(String[] args){
         String s = "nfpdmpi";
-        Solution sl = new Solution();
-        System.out.println(sl.lengthOfLongestSubstring2(s));
+        Solution2 sl = new Solution2();
+        System.out.println(sl.lengthOfLongestSubstring(s));
+    }
+}
+
+/**
+ * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+ *
+ * 示例 1:
+ * 输入: "abcabcbb"
+ * 输出: 3
+ * 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+ *
+ * 思路：HashMap一遍遍历，遍历的时候有2种情况，字符在HashMap中或不在HashMap中。
+ * 设立start初始值为-1，若当前字符已存在HashMap中就更新start值。
+ * 最后每次更新maxlen的值和HashMap中的值。
+ * */
+class Solution2 {
+    public int lengthOfLongestSubstring(String s) {
+        HashMap<Character,Integer> map = new HashMap<Character,Integer>();
+        if(s.length()==0) return 0;
+        if(s.length()==1) return 1;
+        int maxlen=0;
+        int start=-1;
+        for(int i=0;i<s.length();i++){
+            char tmp = s.charAt(i);
+            if(map.containsKey(tmp)) {
+                start = Math.max(start, map.get(tmp));
+            }
+            maxlen = Math.max(maxlen,i-start);
+            map.put(tmp,i);
+        }
+        return maxlen;
     }
 }
 

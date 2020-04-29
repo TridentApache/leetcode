@@ -16,7 +16,7 @@ import java.util.TreeMap;
 //}
 
 
-/**
+
 
 class Solution{
     public int magiclog(long[] nm, long[] magicValue){
@@ -51,11 +51,14 @@ class Solution{
         return 0;
     }
 
+    /**
+     * 根据给定的键值k来找map中最接近k的键值所对应的value
+     * */
     private Object getK(long key){
         TreeMap<Long,Object> map = new TreeMap<Long,Object>();
 //        Long key = 42;
-        Map.Entry<Long,Object> low = map.floorEntry(key);
-        Map.Entry<Long,Object> high = map.ceilingEntry(key);
+        Map.Entry<Long,Object> low = map.floorEntry(key);//lower entry
+        Map.Entry<Long,Object> high = map.ceilingEntry(key);//higher entry
         Object res = null;
         if (low != null && high != null) {
             res = Math.abs(key-low.getKey()) < Math.abs(key-high.getKey())
@@ -67,5 +70,3 @@ class Solution{
         return res;
     }
 }
- *
- */

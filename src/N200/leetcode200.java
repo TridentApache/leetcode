@@ -5,12 +5,12 @@ import java.util.LinkedList;
 
 public class leetcode200 {
     public static void main(String[] args){
-        Solution s = new Solution();
+        Solution1_1 s = new Solution1_1();
         char[][] test=new char[][]{{'1','1','0','0','0'},
                 {'1','1','0','0','0'},
                 {'0','0','1','0','0'},
                 {'0','0','0','1','1'}};
-        s.numIslands(test);
+        System.out.println(s.numIslands(test));
     }
 }
 /**
@@ -93,7 +93,95 @@ class Solution {
     }
 }
 
+/**
+ * 修改，去掉visited数组
+ * */
+class Solution0_1 {
+    int count=0;
+    int row;
+    int col;
+    LinkedList<int[]> queue;
+    public int numIslands(char[][] grid) {
+        if(grid.length==0) return 0;
+        return BFS(grid);
+    }
+    public int BFS(char[][] grid){
+        queue = new LinkedList<int[]>();
+        row = grid.length;
+        col = grid[0].length;
+        for(int i=0;i<row;i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == '1') {
+                    queue.add(new int[]{i, j});
+                    grid[i][j]='0';
+                    count++;
+                    tmp(grid);
+                }
+            }
+        }
+        return count;
+    }
+    public void tmp(char[][] grid){
+        while(queue.size()!=0){
+            int len = queue.size();
+            for(int k=0;k<len;k++){
+                int[] tmp = queue.removeFirst();
+                int i = tmp[0];
+                int j= tmp[1];
+
+                if(i-1>=0 && grid[i-1][j]=='1'){
+                    queue.addLast(new int[]{i - 1, j});
+                    grid[i - 1][j] = '0';
+
+                }
+
+                if(j-1>=0 && grid[i][j-1]=='1'){
+                    queue.addLast(new int[]{i,j-1});
+                    grid[i][j-1]='0';
+                }
+
+                if(i+1<row && grid[i+1][j]=='1'){
+                    queue.addLast(new int[]{i+1,j});
+                    grid[i+1][j]='0';
+                }
+
+                if(j+1<col && grid[i][j+1]=='1'){
+                    queue.addLast(new int[]{i,j+1});
+                    grid[i][j+1]='0';
+                }
+            }
+        }
+    }
+}
 
 
-
-
+/**
+ * DFS解法
+ * */
+class Solution1_1 {
+    int count=0;
+    int row;
+    int col;
+    public int numIslands(char[][] grid) {
+        if(grid.length==0) return 0;
+        row = grid.length;
+        col = grid[0].length;
+        for(int i=0;i<row;i++) {
+            for (int j = 0; j < col; j++) {
+                if (grid[i][j] == '1') {
+                    dfs(grid,i,j);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public void dfs(char[][] grid,int i,int j){
+        if(i<0||i>=row||j<0||j>=col||grid[i][j]=='0') return;
+        grid[i][j]='0';
+        dfs(grid,i-1,j);
+        dfs(grid,i+1,j);
+        dfs(grid,i,j-1);
+        dfs(grid,i,j+1);
+    }
+}

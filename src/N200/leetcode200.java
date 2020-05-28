@@ -185,3 +185,33 @@ class Solution1_1 {
         dfs(grid,i,j+1);
     }
 }
+
+/**
+ * My dfs Solution
+ * */
+class Solution1_2{
+    int row;
+    int col;
+    int count=0;
+    public int numIslands(char[][] grid) {
+        row = grid.length;
+        if(row==0) return 0;
+        col = grid[0].length;
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]=='0') continue;
+                dfs(i,j,grid);
+                count++;
+            }
+        }
+        return count;
+    }
+    private void dfs(int i, int j, char[][] grid){
+        if(i<0 || i>=row || j<0 || j>=col || grid[i][j]=='0') return;
+        grid[i][j]='0';
+        dfs(i-1,j,grid);
+        dfs(i+1,j,grid);
+        dfs(i,j-1,grid);
+        dfs(i,j+1,grid);
+    }
+}

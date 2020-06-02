@@ -41,3 +41,23 @@ class Solution {
         else return search(nums,target,mid+1,j);
     }
 }
+
+/**
+ * 二分查找,注意是i<=j
+ * */
+class Solution2 {
+    public int searchInsert(int[] nums, int target) {
+        int i=0;
+        int j=nums.length-1;
+        while(i<=j){ //注意
+            int mid=(i+j)/2;
+            if(nums[mid]==target) return mid;
+            else if(nums[mid]>target){
+                j=mid-1;
+            }else{
+                i=mid+1;
+            }
+        }
+        return i;
+    }
+}

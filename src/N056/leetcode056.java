@@ -19,7 +19,7 @@ import java.util.*;
  * 1. List<Integer> 不用add好多次，可以直接Arrays.asList(...)一次性导入
  * 2. 本题思路，首先，先用Arrays.sort把二维数组排序（根据第一列元素大小），new Comparator，覆写compare函数
  * 3. 接着，考虑相邻两个集合大小关系，创建Linkedlist逐个讨论，addLast或removeLast
- * 4. 最后，用List.toArray将链表变成数组
+ * 4. 最后，用List.toArray将链表变成数组，注意初始化（数据类型相同就行了）
  * 5. 注意LinkedList和ArrayList都是List的实现类，List是一个接口，但是LinkedList是链表实现的，ArrayList是数组实现的
  * 6. 在写if讨论2个区间时，条件判断要写闭合，每种情况都要讨论一下
  * 7. 需要仔细研究一下Comparator的结构
@@ -28,8 +28,8 @@ import java.util.*;
 
 public class leetcode056 {
     public static void main(String[] args) {
-        Solution s = new Solution();
-        //int[][] test = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+        Solution2 s = new Solution2();
+//        int[][] test = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
         int[][] test = {{1, 4}, {2, 3}};
         // 打印二维数组
 //        for (int i = 0; i < test.length; i++) {
@@ -137,7 +137,35 @@ class Solution {
             }
         }
 
-        return list.toArray(new int[0][2]);
+        return list.toArray(new int[0][0]);
     }
 
+}
+/**
+ * 先排序，再添加
+ * [n1,n2]，假设添加新的[m1,m2]，分三种情况考虑
+ * n2<m1：直接添加
+ * n2=m1: 合并, 即[n1,m2]
+ * n2>m1: 分2种，1. n2>m2,即[n1,n2]；2. n2<=m2，即[n1,m2]
+ * */
+class Solution2 {
+    public int[][] merge(int[][] intervals) {
+        if(intervals.length==0 || intervals[0].length==0) return intervals;
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {return o1[0]-o2[0];}
+        });
+        LinkedList<int[]> res = new LinkedList<>();
+        res.addLast(intervals[0]);
+        for(int i=1;i<intervals.length;i++){
+            int[] newinterval = intervals[i];
+            if(res.getLast()[1]<newinterval[0]){
+                res.addLast(newinterval);
+            }else if(res.getLast()[1]>=newinterval[0] && res.getLast()[1]<=newinterval[1]){
+                int[] tmp = res.removeLast();
+                res.addLast(new int[]{tmp[0],newinterval[1]});
+            }
+        }
+        return res.toArray(new int[0][2]);
+    }
 }

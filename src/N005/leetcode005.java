@@ -57,3 +57,31 @@ class Solution {
         return s.substring(maxStart,maxEnd+1);
     }
 }
+
+/**
+ * 构建dp[left][right]的数组, 第left行第right列代表string中left到right之间的字符串是对称的。
+ * 两个指针left和right，判断left和right之间的dp数组
+ * */
+class Solution1 {
+    public String longestPalindrome(String s) {
+        if(s==null||s.length()<2) return s;
+        int len = s.length();
+        boolean dp[][] = new boolean[len][len];
+        int maxLen=0;
+        int maxStart = 0;
+        int maxEnd = 0;
+        for(int r=1;r<len;r++){
+            for(int l=0;l<r;l++){
+                if(s.charAt(l)==s.charAt(r) && (r-l<=2||dp[l+1][r-1])){
+                    dp[l][r]=true;
+                    if(r-l+1>maxLen){
+                        maxStart=l;
+                        maxEnd=r;
+                        maxLen=r-l+1;
+                    }
+                }
+            }
+        }
+        return s.substring(maxStart,maxEnd+1);
+    }
+}

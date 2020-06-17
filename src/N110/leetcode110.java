@@ -9,6 +9,8 @@ public class leetcode110 {
         root.right.right = new TreeNode(7);
         root.right.right.right = new TreeNode(1);
 
+        Boolean flag = false;
+
         Solution s = new Solution();
         s.isBalanced(root);
     }
